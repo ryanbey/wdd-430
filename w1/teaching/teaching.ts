@@ -1,5 +1,5 @@
-let d: string = 'two';
-let c: string = 'two';
+let c: number = 2;
+let d: number = 2;
 
-let answer2: string = c + d;
+let answer2: number = c + d;
 console.log("Your answer is: " + answer2);
