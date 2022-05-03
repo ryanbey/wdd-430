@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact.model';
 
 @Component({
-  selector: 'cms-contact-detail',
-  templateUrl: './contact-detail.component.html',
-  styleUrls: ['./contact-detail.component.scss']
+   selector: 'cms-contact-detail',
+   templateUrl: './contact-detail.component.html',
+   styleUrls: ['./contact-detail.component.scss']
 })
 
 export class ContactDetailComponent implements OnInit {
-  // Testing
-  contact: Contact = new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', null);
+   // Testing
+   contact: Contact = new Contact('1', 'R. Kent Jackson', 'jacksonk@byui.edu', '208-496-3771', '../../assets/images/jacksonk.jpg', null);
 
-  constructor() { }
+   constructor() { }
 
-  ngOnInit(): void {
-  }
+   ngOnInit(): void {
+   }
 
 }
