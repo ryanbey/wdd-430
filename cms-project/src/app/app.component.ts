@@ -10,4 +10,9 @@ import { HeaderComponent } from './header.component';
 
 export class AppComponent {
    title = 'cms-project';
+   selectedFeature = 'documents';  // Loads by default
+   
+   switchView(selectedFeature: string) {
+      this.selectedFeature = selectedFeature;
+   }
 }
