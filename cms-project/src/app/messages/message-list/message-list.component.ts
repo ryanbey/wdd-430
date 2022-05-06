@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from '../messages.model';
 
 @Component({
   selector: 'cms-message-list',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./message-list.component.scss']
 })
 export class MessageListComponent implements OnInit {
+  messages: Message[];
 
   constructor() { }
 
