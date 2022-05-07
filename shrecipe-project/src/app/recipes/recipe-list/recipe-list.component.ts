@@ -20,7 +20,7 @@ export class RecipeListComponent implements OnInit {
       'Is that bacon?',
       'Yes.',
       'https://images.pexels.com/photos/1927377/pexels-photo-1927377.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.jpg'
-    ),
+    )
   ];
 
   constructor() {}

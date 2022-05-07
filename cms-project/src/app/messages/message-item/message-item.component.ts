@@ -9,7 +9,7 @@ import { Message } from '../messages.model';
 export class MessageItemComponent implements OnInit {
   @Input() message: Message;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

@@ -6,6 +6,7 @@ import { Message } from '../messages.model';
   templateUrl: './message-edit.component.html',
   styleUrls: ['./message-edit.component.scss']
 })
+
 export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject: ElementRef;
   @ViewChild('msgText') msgText: ElementRef;
@@ -14,8 +15,7 @@ export class MessageEditComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSendMessage() {
     const subjectValue = this.subject.nativeElement.value;
