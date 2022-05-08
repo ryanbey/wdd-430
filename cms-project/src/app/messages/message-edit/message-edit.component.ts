@@ -22,8 +22,11 @@ export class MessageEditComponent implements OnInit {
     const msgTextValue = this.msgText.nativeElement.value;
     const message = new Message('1', subjectValue, msgTextValue, this.currentSender);
 
-    this.addMessageEvent.emit(message);
-    this.onClear()  // clear inputs for next message
+    // Only send message if neither fields are empty
+    if (subjectValue && msgTextValue) {
+      this.addMessageEvent.emit(message);
+      this.onClear();
+    }
   }
 
   onClear() {
