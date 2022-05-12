@@ -9,9 +9,8 @@ import { Document } from '../documents.model';
 export class DocumentDetailComponent implements OnInit {
   @Input() document: Document;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
