@@ -6,7 +6,7 @@ import { Message } from '../messages.model';
 @Component({
   selector: 'cms-message-item',
   templateUrl: './message-item.component.html',
-  styleUrls: ['./message-item.component.scss']
+  styleUrls: ['./message-item.component.scss'],
 })
 export class MessageItemComponent implements OnInit {
   @Input() message: Message;
@@ -14,9 +14,8 @@ export class MessageItemComponent implements OnInit {
 
   constructor(private contactService: ContactService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     const contact: Contact = this.contactService.getContact(this.message.sender);
     this.messageSender = contact.name;
   }
-
 }

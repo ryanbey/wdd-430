@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MessageService } from '../message.service';
 import { Message } from '../messages.model';
 
 @Component({
@@ -10,10 +11,9 @@ import { Message } from '../messages.model';
 export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject: ElementRef;
   @ViewChild('msgText') msgText: ElementRef;
-  @Output() addMessageEvent = new EventEmitter<Message>();
-  currentSender = 'Ryan Bey';
+  currentSender = '1';
 
-  constructor() { }
+  constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {}
 
@@ -22,9 +22,9 @@ export class MessageEditComponent implements OnInit {
     const msgTextValue = this.msgText.nativeElement.value;
     const message = new Message('1', subjectValue, msgTextValue, this.currentSender);
 
-    // Only send message if neither fields are empty
+    // Don't add message unless both fields are filled in
     if (subjectValue && msgTextValue) {
-      this.addMessageEvent.emit(message);
+      this.messageService.addMessage(message);      
       this.onClear();
     }
   }
