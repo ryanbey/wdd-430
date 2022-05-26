@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Contact } from '../contact.model';
+import { ContactService } from '../contact.service';
 
 @Component({
    selector: 'cms-contact-detail',
@@ -8,10 +10,19 @@ import { Contact } from '../contact.model';
 })
 
 export class ContactDetailComponent implements OnInit {
-   @Input() contact: Contact;
+   contact: Contact;
+   id: string;
 
-   constructor() {}
+   constructor(private contactService: ContactService,
+               private router: Router,
+               private route: ActivatedRoute) {}
 
-   ngOnInit(): void {}
+   ngOnInit(): void {
+      // Subscribe to active route, get id from active route, get contact with that id
+      this.route.params.subscribe((params: Params) => {
+         this.id = params['id'];
+         this.contact = this.contactService.getContact(this.id);
+      });
+   }
 
 }
