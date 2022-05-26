@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentService } from '../document.service';
 import { Document } from '../documents.model';
 
@@ -15,5 +14,9 @@ export class DocumentListComponent implements OnInit {
     this.documents = this.documentService.getDocuments();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.documentService.documentChangedEvent.subscribe((documents: Document[]) => {
+      this.documents = documents;
+    });
+  }
 }

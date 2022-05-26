@@ -14,7 +14,10 @@ export class DocumentDetailComponent implements OnInit {
   id: string;
   nativeWindow: any;
 
-  constructor(private documentService: DocumentService, private route: ActivatedRoute, private winRefService: WindRefService) {
+  constructor(private documentService: DocumentService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private winRefService: WindRefService) {
     this.nativeWindow = this.winRefService.getNativeWindow();
   }
   
@@ -29,6 +32,12 @@ export class DocumentDetailComponent implements OnInit {
     if (this.document.url) {
       this.nativeWindow.open(this.document.url);
     }
+  }
+
+  onDelete() {
+    // Delete the document then go back to /documents url
+    this.documentService.deleteDocument(this.document);
+    this.router.navigate(['/documents'], { relativeTo: this.route });
   }
 
 }
