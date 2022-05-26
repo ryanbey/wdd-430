@@ -3,10 +3,8 @@
       <cms-document-list></cms-document-list>
    </div>
 
-   <div class="col-md-4">
-      <cms-document-detail
-         *ngIf="selectedDocument"
-         [document]="selectedDocument"
-      ></cms-document-detail>
+   <div class="col-md-7">
+      <!-- DocumentDetail Component -->
+      <router-outlet></router-outlet>
    </div>
 </div>
