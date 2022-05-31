@@ -21,7 +21,7 @@ export class ContactService {
   // Get all contacts
   getContacts(): Contact[] {
     return this.contacts
-      .sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0)
+      .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       .slice();
   }
 
@@ -33,14 +33,14 @@ export class ContactService {
   // Delete one contact
   deleteContact(contact: Contact) {
     if (!contact) {
-      return
-    };
+      return;
+    }
 
     const pos = this.contacts.indexOf(contact);
     if (pos < 0) {
-      return
-    };
-    
+      return;
+    }
+
     this.contacts.splice(pos, 1);
     this.contactListChangedEvent.next(this.contacts.slice());
   }
@@ -89,5 +89,4 @@ export class ContactService {
     const contactsListClone = this.contacts.slice();
     this.contactListChangedEvent.next(contactsListClone);
   }
-
 }

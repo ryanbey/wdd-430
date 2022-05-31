@@ -4,7 +4,7 @@ import { Document } from './documents.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DocumentService {
   private documents: Document[] = [];
@@ -21,7 +21,7 @@ export class DocumentService {
   // Get all documents
   getDocuments(): Document[] {
     return this.documents
-      .sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0)
+      .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       .slice();
   }
 
@@ -33,13 +33,13 @@ export class DocumentService {
   // Delete one document
   deleteDocument(document: Document) {
     if (!document) {
-      return
-    };
+      return;
+    }
 
     const index = this.documents.indexOf(document);
     if (index < 0) {
       return;
-    };
+    }
 
     this.documents.splice(index, 1);
     this.documentListChangedEvent.next(this.documents.slice());
@@ -73,7 +73,6 @@ export class DocumentService {
     this.documentListChangedEvent.next(documentsListClone);
   }
 
-
   // Edit or update a document and add it to the document list
   updateDocument(ogDoc: Document, newDoc: Document): Document {
     if (!ogDoc || !newDoc) {
@@ -90,5 +89,4 @@ export class DocumentService {
     const documentsListClone = this.documents.slice();
     this.documentListChangedEvent.next(documentsListClone);
   }
-
 }
