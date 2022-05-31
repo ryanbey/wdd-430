@@ -32,9 +32,15 @@ export class ContactService {
 
   // Delete one contact
   deleteContact(contact: Contact) {
-    if (!contact) {return};
+    if (!contact) {
+      return
+    };
+
     const pos = this.contacts.indexOf(contact);
-    if (pos < 0) {return};
+    if (pos < 0) {
+      return
+    };
+    
     this.contacts.splice(pos, 1);
     this.contactListChangedEvent.next(this.contacts.slice());
   }

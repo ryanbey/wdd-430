@@ -38,7 +38,7 @@ export class DocumentService {
 
     const index = this.documents.indexOf(document);
     if (index < 0) {
-      return
+      return;
     };
 
     this.documents.splice(index, 1);
