@@ -74,18 +74,18 @@ export class DocumentService {
   }
 
   // Edit or update a document and add it to the document list
-  updateDocument(ogDoc: Document, newDoc: Document): Document {
-    if (!ogDoc || !newDoc) {
+  updateDocument(ogDocument: Document, newDocument: Document): Document {
+    if (!ogDocument || !newDocument) {
       return;
     }
 
-    const index = this.documents.indexOf(ogDoc);
+    const index = this.documents.indexOf(ogDocument);
     if (index < 0) {
       return;
     }
 
-    newDoc.id = ogDoc.id;
-    this.documents[index] = newDoc;
+    newDocument.id = ogDocument.id;
+    this.documents[index] = newDocument;
     const documentsListClone = this.documents.slice();
     this.documentListChangedEvent.next(documentsListClone);
   }
