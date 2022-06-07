@@ -22,12 +22,15 @@ Hero Image
 Cards for Categories
 
 Category pages:
-List on left
-List can scroll
-Detail on right
-List has background images for each track (faded)
-List items enlarge on hover
-Add buttom for admin
+Desktop - List on left, detail on right
+Mobile - Scrolling list on bottom, detail on top?? Maybe switch, test it out
+
+Track List:
+Scrolling
+Only show track name, leave details to Track Detail
+Faded background image for each list item
+List items enlarge slightly on hover
+Add Track buttom for admin
 
 Track Detail:
 Card image on top (different from background image)
@@ -37,3 +40,6 @@ Edit button for admin
 
 MongoDB:
 Separate collection for each category, or give each track a "type" field?
+
+CSS:
+Vanila or Angular Material?
