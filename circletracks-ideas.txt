@@ -1,0 +1,39 @@
+Categories:
+Intermediates
+Superspeedways
+Short Tracks
+Road Courses
+Dirt Tracks
+Legacy
+
+Each Track (db):
+Built
+Length
+Surface Type
+Banking
+Location
+Seating Capacity
+Track Map
+Background Image
+Card Image
+
+Home:
+Hero Image
+Cards for Categories
+
+Category pages:
+List on left
+List can scroll
+Detail on right
+List has background images for each track (faded)
+List items enlarge on hover
+Add buttom for admin
+
+Track Detail:
+Card image on top (different from background image)
+Track name
+Details underneath
+Edit button for admin
+
+MongoDB:
+Separate collection for each category, or give each track a "type" field?
