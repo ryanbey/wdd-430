@@ -12,4 +12,8 @@ export class DocumentEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCancel() {
+    
+  }
+
 }
