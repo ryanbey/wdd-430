@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Document } from '../documents.model';
 
 @Component({
   selector: 'cms-document-edit',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./document-edit.component.scss']
 })
 export class DocumentEditComponent implements OnInit {
+  originalDocument: Document;
+  document: Document;
+  editMode = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+  }
+
+  onSubmit(form) {
+
   }
 
   onCancel() {
