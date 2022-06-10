@@ -7,11 +7,16 @@ import { Contact } from '../contact.model';
   styleUrls: ['./contact-edit.component.scss']
 })
 export class ContactEditComponent implements OnInit {
+  contact: Contact;
   groupContacts: Contact[];
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(form) {
+    
   }
 
   onCancel() {
