@@ -56,7 +56,7 @@ export class DocumentService {
       }
     }
 
-    return maxId;
+    return maxId + 1;
   }
 
   // Add a new document to the document list
