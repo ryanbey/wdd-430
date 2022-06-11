@@ -16,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesService } from './recipes/recipes.service';
-import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,7 @@ import { DndModule } from 'ng2-dnd';
     RecipeStartComponent,
     RecipeEditComponent
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule, DndModule.forRoot()],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
   providers: [ShoppingListService, RecipesService],
   bootstrap: [AppComponent],
 })
