@@ -56,7 +56,7 @@ export class ContactService {
       }
     }
 
-    return maxId;
+    return maxId + 1;
   }
 
   // Add a new contact to the contact list
