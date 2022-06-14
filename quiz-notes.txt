@@ -1,0 +1,17 @@
+Quiz notes
+
+There are customizable pipes and built-in pipes
+There are synchronus and asynchronus pipes
+
+<p>{{ username | uppercase }}</p>
+
+You can pass parameters to a pipe with a colon
+<p>{{ server.started | date: 'fullDate' }}</p>
+
+Multiple pipes
+<p>{{ server.started | date: 'fullDate' | uppercase }}</p>
+
+Custom pipes
+ng g p
+
+
