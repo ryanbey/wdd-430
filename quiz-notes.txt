@@ -15,3 +15,5 @@ Custom pipes
 ng g p
 
 
+What module is needed for HTTP
+HTTPClientModule <---
