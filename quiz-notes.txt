@@ -17,3 +17,20 @@ ng g p
 
 What module is needed for HTTP
 HTTPClientModule <---
+
+
+
+Instead of for loop...
+
+transform(contacts: Contact[], ...) {
+   ...
+
+   filteredContacts = contacts.filter(
+      (contact: Contact) => {
+         contact.name.toLowerCase().includes(term.toLowerCase());
+      }
+   )
+
+   return filteredContacts.length > 0 ? filteredContacts : contacts
+
+}
