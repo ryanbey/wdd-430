@@ -70,7 +70,7 @@ export class ContactService {
     }
 
     this.contacts.splice(pos, 1);
-    this.contactListChangedEvent.next(this.contacts.slice());
+    this.storeContacts();
   }
 
   // Find maximum ID to generate unique ID for new contacts
@@ -97,8 +97,7 @@ export class ContactService {
     let newId = +newContact.id;
     newId = this.maxContactId;
     this.contacts.push(newContact);
-    const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts();
   }
 
   // Edit or update a contact and add it to the contact list
@@ -114,7 +113,6 @@ export class ContactService {
 
     newContact.id = ogContact.id;
     this.contacts[index] = newContact;
-    const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts();
   }
 }
