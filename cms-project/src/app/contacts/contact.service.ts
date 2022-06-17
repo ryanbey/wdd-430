@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
@@ -13,16 +14,43 @@ export class ContactService {
   contactListChangedEvent = new Subject<Contact[]>();
   maxContactId: number;
 
-  constructor() {
-    this.contacts = MOCKCONTACTS;
+  constructor(private http: HttpClient) {
+    this.contacts = [];
     this.maxContactId = this.getMaxId();
   }
 
   // Get all contacts
-  getContacts(): Contact[] {
-    return this.contacts
-      .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      .slice();
+  getContacts() {
+    this.http
+      .get<Contact[]>(
+        'https://cms-project-4c979-default-rtdb.firebaseio.com/contacts.json'
+      )
+      .subscribe(
+        (contacts: Contact[]) => {
+          this.contacts = contacts;
+          this.maxContactId = this.getMaxId();
+          this.contacts.sort((a, b) =>
+            a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+          );
+          this.contactListChangedEvent.next(this.contacts.slice());
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  storeContacts() {
+    let contacts = JSON.stringify(this.contacts);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.put(
+      'https://cms-project-4c979-default-rtdb.firebaseio.com/contacts.json',
+      contacts,
+      { headers: headers }
+    )
+    .subscribe(() => {
+      this.contactListChangedEvent.next(this.contacts.slice());
+    });
   }
 
   // Get one contact
