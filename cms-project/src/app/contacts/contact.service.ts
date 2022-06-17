@@ -43,14 +43,15 @@ export class ContactService {
   storeContacts() {
     let contacts = JSON.stringify(this.contacts);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(
-      'https://cms-project-4c979-default-rtdb.firebaseio.com/contacts.json',
-      contacts,
-      { headers: headers }
-    )
-    .subscribe(() => {
-      this.contactListChangedEvent.next(this.contacts.slice());
-    });
+    this.http
+      .put(
+        'https://cms-project-4c979-default-rtdb.firebaseio.com/contacts.json',
+        contacts,
+        { headers: headers }
+      )
+      .subscribe(() => {
+        this.contactListChangedEvent.next(this.contacts.slice());
+      });
   }
 
   // Get one contact
