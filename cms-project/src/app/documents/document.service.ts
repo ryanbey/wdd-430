@@ -2,7 +2,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Document } from './documents.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +31,7 @@ export class DocumentService {
             a.name > b.name ? 1 : a.name < b.name ? -1 : 0
           );
           this.documentListChangedEvent.next(this.documents.slice());
-          console.log('Got documents from Firebase!');
         },
-        // error method
         (error: any) => {
           console.log(error);
         }
