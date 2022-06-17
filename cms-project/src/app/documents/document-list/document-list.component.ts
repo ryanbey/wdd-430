@@ -9,11 +9,11 @@ import { Document } from '../documents.model';
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
-  documents: Document[];
+  documents: Document[] = [];
   subscription: Subscription;
 
   constructor(private documentService: DocumentService) {
-    this.documents = this.documentService.getDocuments();
+    this.documentService.getDocuments();
   }
 
   ngOnInit(): void {

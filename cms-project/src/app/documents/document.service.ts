@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Document } from './documents.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
@@ -9,20 +10,48 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 export class DocumentService {
   private documents: Document[] = [];
   documentSelectedEvent = new EventEmitter<Document>();
-  // documentChangedEvent = new EventEmitter<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
   maxDocumentId: number;
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
+  constructor(private http: HttpClient) {
+    this.documents = [];
     this.maxDocumentId = this.getMaxId();
   }
 
-  // Get all documents
-  getDocuments(): Document[] {
-    return this.documents
-      .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      .slice();
+  // Get all documents from Firebase
+  getDocuments() {
+    this.http
+      .get<Document[]>(
+        'https://cms-project-4c979-default-rtdb.firebaseio.com/documents.json'
+      )
+      .subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+          this.maxDocumentId = this.getMaxId();
+          this.documents.sort((a, b) =>
+            a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+          );
+          this.documentListChangedEvent.next(this.documents.slice());
+          console.log('Got documents from Firebase!');
+        },
+        // error method
+        (error: any) => {
+          console.log(error);
+        }
+      );
+  }
+
+  storeDocuments() {
+    let documents = JSON.stringify(this.documents);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.put(
+      'https://cms-project-4c979-default-rtdb.firebaseio.com/documents.json',
+      documents,
+      { headers: headers }
+    )
+    .subscribe(() => {
+      this.documentListChangedEvent.next(this.documents.slice());
+    });
   }
 
   // Get one document
@@ -42,7 +71,7 @@ export class DocumentService {
     }
 
     this.documents.splice(index, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
   // Find maximum ID to generate unique ID for new documents
@@ -69,8 +98,7 @@ export class DocumentService {
     let newId = +newDoc.id;
     newId = this.maxDocumentId;
     this.documents.push(newDoc);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   // Edit or update a document and add it to the document list
@@ -86,7 +114,6 @@ export class DocumentService {
 
     newDocument.id = ogDocument.id;
     this.documents[index] = newDocument;
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 }
