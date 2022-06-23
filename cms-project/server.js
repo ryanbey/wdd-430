@@ -1,16 +1,20 @@
 // Get dependencies
-var express = require("express");
-var path = require("path");
-var http = require("http");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+let express = require("express");
+let path = require("path");
+let http = require("http");
+let cookieParser = require("cookie-parser");
+let logger = require("morgan");
 
 // Import the routing file to handle the default (index) route
-var index = require("./server/routes/app");
+let index = require("./server/routes/app");
 
-// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
+// Import routing files
+let index = require('./server/routes/app');
+const messageRoutes = require('./server/routes/messages')
+const contactRoutes = require('./server/routes/contacts')
+const documentRoutes = require('./server/routes/documents')
 
-var app = express(); // Create an instance of express
+let app = express(); // Create an instance of express
 
 // Tell express to use the following parsers for POST data
 app.use(express.json());
@@ -43,8 +47,12 @@ app.use(express.static(path.join(__dirname, "dist/cms-project")));
 
 // Tell express to map the default route ('/') to the index route
 app.use("/", index);
+app.use('/messages', messageRoutes);
+app.use('/contacts', contactRoutes);
+app.use('/documents', documentRoutes);
 
-// ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
+// Mapping URL's to routing files
+
 
 // Tell express to map all other non-defined routes back to the index page
 app.get("*", (req, res) => {
