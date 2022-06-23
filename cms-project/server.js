@@ -5,9 +5,6 @@ let http = require("http");
 let cookieParser = require("cookie-parser");
 let logger = require("morgan");
 
-// Import the routing file to handle the default (index) route
-let index = require("./server/routes/app");
-
 // Import routing files
 let index = require('./server/routes/app');
 const messageRoutes = require('./server/routes/messages')
