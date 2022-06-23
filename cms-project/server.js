@@ -42,14 +42,11 @@ app.use((req, res, next) => {
 // root directory for your web site
 app.use(express.static(path.join(__dirname, "dist/cms-project")));
 
-// Tell express to map the default route ('/') to the index route
+// Mapping URL's to routing files
 app.use("/", index);
 app.use('/messages', messageRoutes);
 app.use('/contacts', contactRoutes);
 app.use('/documents', documentRoutes);
-
-// Mapping URL's to routing files
-
 
 // Tell express to map all other non-defined routes back to the index page
 app.get("*", (req, res) => {
