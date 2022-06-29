@@ -4,12 +4,13 @@ let path = require("path");
 let http = require("http");
 let cookieParser = require("cookie-parser");
 let logger = require("morgan");
+var mongoose = require("mongoose");
 
 // Import routing files
-let index = require('./server/routes/app');
-const messageRoutes = require('./server/routes/messages')
-const contactRoutes = require('./server/routes/contacts')
-const documentRoutes = require('./server/routes/documents')
+let index = require("./server/routes/app");
+const messageRoutes = require("./server/routes/messages");
+const contactRoutes = require("./server/routes/contacts");
+const documentRoutes = require("./server/routes/documents");
 
 let app = express(); // Create an instance of express
 
@@ -44,9 +45,22 @@ app.use(express.static(path.join(__dirname, "dist/cms-project")));
 
 // Mapping URL's to routing files
 app.use("/", index);
-app.use('/messages', messageRoutes);
-app.use('/contacts', contactRoutes);
-app.use('/documents', documentRoutes);
+app.use("/messages", messageRoutes);
+app.use("/contacts", contactRoutes);
+app.use("/documents", documentRoutes);
+
+// Establish a connection to the Mongo database
+mongoose.connect(
+  "mongodb://localhost:27017/cms",
+  { useNewUrlParser: true },
+  (err, res) => {
+    if (err) {
+      console.log("Connection failed: " + err);
+    } else {
+      console.log("Connected to database!");
+    }
+  }
+);
 
 // Tell express to map all other non-defined routes back to the index page
 app.get("*", (req, res) => {
