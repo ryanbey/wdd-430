@@ -1,29 +1,29 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
 module.exports = router;
-const sequenceGenerator = require("./sequenceGenerator");
-const Document = require("../models/document");
-const { read } = require("fs");
+const sequenceGenerator = require('./sequenceGenerator');
+const Document = require('../models/document');
+const { read } = require('fs');
 
-router.get("/", (req, res, next) => {
+router.get('/', (req, res, next) => {
   Document.find()
-    .populate("group")
+    .populate('group')
     .then((documents) => {
       res.status(200).json({
-        message: "Documents fetched successfully!",
+        message: 'Documents fetched successfully!',
         documents: documents,
       });
     })
     .catch((error) => {
       res.status(500).json({
-        message: "An error occurred",
+        message: 'An error occurred',
         error: error,
       });
     });
 });
 
-router.post("/", (req, res, next) => {
-  const maxDocumentId = sequenceGenerator.nextId("documents");
+router.post('/', (req, res, next) => {
+  const maxDocumentId = sequenceGenerator.nextId('documents');
 
   const document = new Document({
     id: maxDocumentId,
@@ -36,19 +36,19 @@ router.post("/", (req, res, next) => {
     .save()
     .then((createdDocument) => {
       res.status(201).json({
-        message: "Document added successfully",
+        message: 'Document added successfully',
         document: createdDocument,
       });
     })
     .catch((error) => {
       res.status(500).json({
-        message: "An error occurred",
+        message: 'An error occurred',
         error: error,
       });
     });
 });
 
-router.put("/:id", (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   Document.findOne({ id: req.params.id })
     .then((document) => {
       document.name = req.body.name;
@@ -58,44 +58,44 @@ router.put("/:id", (req, res, next) => {
       Document.updateOne({ id: req.params.id }, document)
         .then((res) => {
           res.status(204).json({
-            message: "Document updated successfully",
+            message: 'Document updated successfully',
           });
         })
         .catch((error) => {
           res.status(500).json({
-            message: "An error occurred",
+            message: 'An error occurred',
             error: error,
           });
         });
     })
     .catch((error) => {
       res.status(500).json({
-        message: "Document not found.",
-        error: { document: "Document not found" },
+        message: 'Document not found.',
+        error: { document: 'Document not found' },
       });
     });
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   Document.findOne({ id: req.params.id })
     .then((document) => {
       Document.deleteOne({ id: req.params.id })
         .then((res) => {
           res.status(204).json({
-            message: "Document deleted successfully",
+            message: 'Document deleted successfully',
           });
         })
         .catch((error) => {
           res.status(500).json({
-            message: "An error occurred",
+            message: 'An error occurred',
             error: error,
           });
         });
     })
     .catch((error) => {
       res.status(500).json({
-        message: "Document not found.",
-        error: { document: "Document not found" },
+        message: 'Document not found.',
+        error: { document: 'Document not found' },
       });
     });
 });
