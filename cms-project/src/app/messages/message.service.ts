@@ -16,33 +16,29 @@ export class MessageService {
   }
 
   getMessages() {
-    this.http
-      .get<Message[]>(
-        'https://cms-project-4c979-default-rtdb.firebaseio.com/messages.json'
-      )
-      .subscribe(
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.maxMessageId = this.getMaxId();
-          this.messageChangedEvent.next(this.messages.slice());
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+    this.http.get<Message[]>('http://localhost:3000/messages').subscribe(
+      (messages: Message[]) => {
+        this.messages = messages;
+        this.messageChangedEvent.next(this.messages.slice());
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
-  
+
   storeMessages() {
     let messages = JSON.stringify(this.messages);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(
-      'https://cms-project-4c979-default-rtdb.firebaseio.com/messages.json',
-      messages,
-      { headers: headers }
-    )
-    .subscribe(() => {
-      this.messageChangedEvent.next(this.messages.slice());
-    });
+    this.http
+      .put(
+        'https://cms-project-4c979-default-rtdb.firebaseio.com/messages.json',
+        messages,
+        { headers: headers }
+      )
+      .subscribe(() => {
+        this.messageChangedEvent.next(this.messages.slice());
+      });
   }
 
   // Get one message
@@ -51,19 +47,27 @@ export class MessageService {
   }
 
   // Add a message to the message list
-  addMessage(message: Message) {
-    this.messages.push(message);
-    this.storeMessages();
-  }
 
-  getMaxId(): number {
-    let maxId = 0;
-    for (let message of this.messages) {
-      let currentId = +message.id;
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
+  addMessage(message: Message) {
+    if (!message) {
+      return;
     }
-    return maxId + 1;
+
+    // make sure id of the new Message is empty
+    message.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ postMessage: string; message: Message }>(
+        'http://localhost:3000/messages',
+        message,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new message to messages
+        this.messages.push(responseData.message);
+      });
   }
 }
