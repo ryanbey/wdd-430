@@ -7,7 +7,6 @@ const { read } = require('fs');
 
 router.get('/', (req, res, next) => {
   Document.find()
-    .populate('group')
     .then((documents) => {
       res.status(200).json({
         message: 'Documents fetched successfully!',

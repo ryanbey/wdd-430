@@ -7,7 +7,6 @@ const { read } = require('fs');
 
 router.get('/', (req, res, next) => {
   Message.find()
-    .populate('group')
     .then((contacts) => {
       res.status(200).json({
         message: 'Messages fetched successfully!',
