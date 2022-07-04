@@ -27,19 +27,19 @@ export class MessageService {
     );
   }
 
-  storeMessages() {
-    let messages = JSON.stringify(this.messages);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http
-      .put(
-        'https://cms-project-4c979-default-rtdb.firebaseio.com/messages.json',
-        messages,
-        { headers: headers }
-      )
-      .subscribe(() => {
-        this.messageChangedEvent.next(this.messages.slice());
-      });
-  }
+  // storeMessages() {
+  //   let messages = JSON.stringify(this.messages);
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   this.http
+  //     .put(
+  //       'https://cms-project-4c979-default-rtdb.firebaseio.com/messages.json',
+  //       messages,
+  //       { headers: headers }
+  //     )
+  //     .subscribe(() => {
+  //       this.messageChangedEvent.next(this.messages.slice());
+  //     });
+  // }
 
   // Get one message
   getMessage(id: string): Message {

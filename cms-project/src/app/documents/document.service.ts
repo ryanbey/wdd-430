@@ -32,19 +32,19 @@ export class DocumentService {
     );
   }
 
-  storeDocuments() {
-    let documents = JSON.stringify(this.documents);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http
-      .put(
-        'https://cms-project-4c979-default-rtdb.firebaseio.com/documents.json',
-        documents,
-        { headers: headers }
-      )
-      .subscribe(() => {
-        this.documentListChangedEvent.next(this.documents.slice());
-      });
-  }
+  // storeDocuments() {
+  //   let documents = JSON.stringify(this.documents);
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   this.http
+  //     .put(
+  //       'https://cms-project-4c979-default-rtdb.firebaseio.com/documents.json',
+  //       documents,
+  //       { headers: headers }
+  //     )
+  //     .subscribe(() => {
+  //       this.documentListChangedEvent.next(this.documents.slice());
+  //     });
+  // }
 
   // Get one document
   getDocument(id: string): Document {
