@@ -15,7 +15,10 @@ export class ContactService {
 
   // Get all contacts
   getContacts() {
-    this.http.get<{ message: String, contacts: Contact[] }>('http://localhost:3000/contacts')
+    this.http
+      .get<{ message: String; contacts: Contact[] }>(
+        'http://localhost:3000/contacts'
+      )
       .subscribe(
         (responseData) => {
           this.contacts = responseData.contacts;
@@ -29,7 +32,9 @@ export class ContactService {
 
   // Get one contact
   getContact(id: string) {
-    return this.http.get<{ message: string, contact: Contact }>('http://localhost:3000/contacts' + id);
+    return this.http.get<{ message: string; contact: Contact }>(
+      'http://localhost:3000/contacts/' + id
+    );
   }
 
   // Delete one contact
@@ -38,20 +43,19 @@ export class ContactService {
       return;
     }
 
-    const pos = this.contacts.findIndex(d => d.id === contact.id);
+    const pos = this.contacts.findIndex((d) => d.id === contact.id);
 
     if (pos < 0) {
       return;
     }
 
     // Delete from database
-    this.http.delete('http://localhost:3000/contacts/' + contact.id)
-      .subscribe(
-        (response: Response) => {
-          this.contacts.splice(pos, 1);
-          this.sortAndSend();
-        }
-      );
+    this.http
+      .delete('http://localhost:3000/contacts/' + contact.id)
+      .subscribe((response: Response) => {
+        this.contacts.splice(pos, 1);
+        this.sortAndSend();
+      });
   }
 
   // Add a new contact to the contact list
@@ -67,7 +71,7 @@ export class ContactService {
 
     // Add to database
     this.http
-      .post<{ message: string, contact: Contact }>(
+      .post<{ message: string; contact: Contact }>(
         'http://localhost:3000/contacts',
         contact,
         { headers: headers }
@@ -85,7 +89,7 @@ export class ContactService {
       return;
     }
 
-    const pos = this.contacts.findIndex(d => d.id === originalContact.id);
+    const pos = this.contacts.findIndex((d) => d.id === originalContact.id);
 
     if (pos < 0) {
       return;
@@ -95,21 +99,23 @@ export class ContactService {
     newContact.id = originalContact.id;
     // newContact._id = originalContact._id;
 
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     // Update database
-    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
-      newContact, { headers: headers })
-      .subscribe(
-        (response: Response) => {
-          this.contacts[pos] = newContact;
-          this.sortAndSend();
-        }
-      );
+    this.http
+      .put('http://localhost:3000/contacts/' + originalContact.id, newContact, {
+        headers: headers,
+      })
+      .subscribe((response: Response) => {
+        this.contacts[pos] = newContact;
+        this.sortAndSend();
+      });
   }
 
   sortAndSend() {
-    this.contacts.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
+    this.contacts.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
     this.contactListChangedEvent.next(this.contacts.slice());
   }
 }

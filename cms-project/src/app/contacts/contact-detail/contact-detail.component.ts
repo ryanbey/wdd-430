@@ -21,7 +21,9 @@ export class ContactDetailComponent implements OnInit {
       // Subscribe to active route, get id from active route, get contact with that id
       this.route.params.subscribe((params: Params) => {
          this.id = params['id'];
-         this.contact = this.contactService.getContact(this.id);
+         this.contactService.getContact(this.id).subscribe((contactData) => {
+            this.contact = contactData.contact;
+         });
       });
    }
 
