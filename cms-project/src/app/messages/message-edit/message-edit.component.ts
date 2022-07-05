@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Contact } from 'src/app/contacts/contact.model';
 import { MessageService } from '../message.service';
+import { ContactService } from 'src/app/contacts/contact.service';
 import { Message } from '../messages.model';
 
 @Component({
@@ -11,11 +13,18 @@ import { Message } from '../messages.model';
 export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject: ElementRef;
   @ViewChild('msgText') msgText: ElementRef;
-  currentSender = '1';
+  currentSender: Contact;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private contactService: ContactService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.contactService.getContact('101')
+    //   .subscribe(
+    //     response => {
+    //       this.currentSender = response.contact;
+    //     }
+    //   ); WATCH CLASS RECORDING
+  }
 
   onSendMessage() {
     const subjectValue = this.subject.nativeElement.value;
