@@ -17,18 +17,19 @@ export class DocumentService {
 
   // Get all documents from Firebase
   getDocuments() {
-    this.http.get<Document[]>('http://localhost:3000/documents').subscribe(
-      (documents: Document[]) => {
-        this.documents = documents;
-        this.documents.sort((a, b) =>
-          a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-        );
-        this.documentListChangedEvent.next(this.documents.slice());
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.http
+      .get<{ message: String; documents: Document[] }>(
+        'http://localhost:3000/documents'
+      )
+      .subscribe(
+        (responseData) => {
+          this.documents = responseData.documents;
+          this.sortAndSend();
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   // Get one document

@@ -6,21 +6,24 @@ import { Message } from './messages.model';
   providedIn: 'root',
 })
 export class MessageService {
-  private messages: Message[];
+  private messages: Message[] = [];
   messageChangedEvent = new EventEmitter<Message[]>();
 
   constructor(private http: HttpClient) {}
 
   getMessages() {
-    this.http.get<Message[]>('http://localhost:3000/messages').subscribe(
-      (messages: Message[]) => {
-        this.messages = messages;
-        this.messageChangedEvent.next(this.messages.slice());
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.http
+      .get<{ message: String; messages: Message[] }>(
+        'http://localhost:3000/messages'
+      )
+      .subscribe(
+        (responseData) => {
+          this.messages = responseData.messages;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   // Get one message
