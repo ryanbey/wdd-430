@@ -10,7 +10,24 @@ router.get("/", (req, res, next) => {
     .then((messages) => {
       res.status(200).json({
         message: "Messages fetched successfully!",
-        object: messages
+        messages: messages,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "An error occurred",
+        error: error,
+      });
+    });
+});
+
+router.get("/:id", (req, res, next) => {
+  Message.findOne({ id: req.params.id })
+    .populate("sender")
+    .then((messages) => {
+      res.status(200).json({
+        message: "Message fetched successfully!",
+        message: message,
       });
     })
     .catch((error) => {
@@ -26,9 +43,9 @@ router.post("/", (req, res, next) => {
 
   const message = new Message({
     id: maxMessageId,
-    name: req.body.subject,
-    description: req.body.msgText,
-    url: req.body.sender,
+    subject: req.body.subject,
+    msgText: req.body.msgText,
+    sender: req.body.sender,
   });
 
   message

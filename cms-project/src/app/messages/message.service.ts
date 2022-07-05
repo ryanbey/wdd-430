@@ -11,6 +11,7 @@ export class MessageService {
 
   constructor(private http: HttpClient) {}
 
+  // Get all messages
   getMessages() {
     this.http
       .get<{ message: String; messages: Message[] }>(
