@@ -2,16 +2,16 @@ var express = require('express');
 var router = express.Router();
 module.exports = router;
 const sequenceGenerator = require('./sequenceGenerator');
-const Message = require('../models/contact');
+const Message = require('../models/message');
 const { read } = require('fs');
 
 router.get('/', (req, res, next) => {
   Message.find()
-    .populate('group')
-    .then((contacts) => {
+  .populate('sender')
+    .then((messages) => {
       res.status(200).json({
         message: 'Messages fetched successfully!',
-        contacts: contacts,
+        messages: messages,
       });
     })
     .catch((error) => {
@@ -23,21 +23,21 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const maxMessageId = sequenceGenerator.nextId('contacts');
+  const maxMessageId = sequenceGenerator.nextId('messages');
 
-  const contact = new Message({
+  const message = new Message({
     id: maxMessageId,
-    name: req.body.name,
-    description: req.body.description,
-    url: req.body.url,
+    name: req.body.subject,
+    description: req.body.msgText,
+    url: req.body.sender,
   });
 
-  contact
+  message
     .save()
     .then((createdMessage) => {
       res.status(201).json({
-        message: 'Message added successfully',
-        contact: createdMessage,
+        response: 'Message added successfully',
+        newMessage: createdMessage,
       });
     })
     .catch((error) => {
@@ -50,12 +50,12 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   Message.findOne({ id: req.params.id })
-    .then((contact) => {
-      contact.name = req.body.name;
-      contact.description = req.body.description;
-      contact.url = req.body.url;
+    .then((message) => {
+      message.subject = req.body.subject,
+      message.msgText = req.body.msgText,
+      message.sender = req.body.sender,
 
-      Message.updateOne({ id: req.params.id }, contact)
+      Message.updateOne({ id: req.params.id }, message)
         .then((res) => {
           res.status(204).json({
             message: 'Message updated successfully',
@@ -71,14 +71,14 @@ router.put('/:id', (req, res, next) => {
     .catch((error) => {
       res.status(500).json({
         message: 'Message not found.',
-        error: { contact: 'Message not found' },
+        error: { message: 'Message not found' },
       });
     });
 });
 
 router.delete('/:id', (req, res, next) => {
   Message.findOne({ id: req.params.id })
-    .then((contact) => {
+    .then((message) => {
       Message.deleteOne({ id: req.params.id })
         .then((res) => {
           res.status(204).json({
@@ -95,7 +95,7 @@ router.delete('/:id', (req, res, next) => {
     .catch((error) => {
       res.status(500).json({
         message: 'Message not found.',
-        error: { contact: 'Message not found' },
+        error: { message: 'Message not found' },
       });
     });
 });
