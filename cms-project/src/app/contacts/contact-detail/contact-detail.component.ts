@@ -10,7 +10,7 @@ import { ContactService } from '../contact.service';
 })
 
 export class ContactDetailComponent implements OnInit {
-   contact: Contact;
+   contact;
    id: string;
 
    constructor(private contactService: ContactService,

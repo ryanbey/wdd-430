@@ -7,33 +7,38 @@ import { Message } from '../messages.model';
 @Component({
   selector: 'cms-message-edit',
   templateUrl: './message-edit.component.html',
-  styleUrls: ['./message-edit.component.scss']
+  styleUrls: ['./message-edit.component.scss'],
 })
-
 export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject: ElementRef;
   @ViewChild('msgText') msgText: ElementRef;
   currentSender: Contact;
 
-  constructor(private messageService: MessageService, private contactService: ContactService) {}
+  constructor(
+    private messageService: MessageService,
+    private contactService: ContactService
+  ) {}
 
   ngOnInit(): void {
-    // this.contactService.getContact('101')
-    //   .subscribe(
-    //     response => {
-    //       this.currentSender = response.contact;
-    //     }
-    //   ); WATCH CLASS RECORDING
+    this.contactService.getContact('101').subscribe((response) => {
+      this.currentSender = response.contact;
+    });
   }
 
   onSendMessage() {
     const subjectValue = this.subject.nativeElement.value;
     const msgTextValue = this.msgText.nativeElement.value;
-    const message = new Message('1', subjectValue, msgTextValue, this.currentSender);
+    const message = new Message(
+      '',
+      '',
+      subjectValue,
+      msgTextValue,
+      this.currentSender
+    );
 
     // Don't add message unless both fields are filled in
     if (subjectValue && msgTextValue) {
-      this.messageService.addMessage(message);      
+      this.messageService.addMessage(message);
       this.onClear();
     }
   }

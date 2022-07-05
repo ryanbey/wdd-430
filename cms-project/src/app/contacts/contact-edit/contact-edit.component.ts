@@ -10,7 +10,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-edit.component.scss'],
 })
 export class ContactEditComponent implements OnInit {
-  originalContact: Contact;
+  originalContact;
   contact: Contact;
   groupContacts: Contact[] = [];
   editMode = false;

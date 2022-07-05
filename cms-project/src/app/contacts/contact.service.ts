@@ -10,25 +10,26 @@ export class ContactService {
   private contacts: Contact[] = [];
   contactSelectedEvent = new EventEmitter<Contact>();
   contactListChangedEvent = new Subject<Contact[]>();
-  maxContactId: number;
 
-  constructor(private http: HttpClient) {
-    this.contacts = [];
-  }
+  constructor(private http: HttpClient) {}
 
   // Get all contacts
   getContacts() {
-    this.http.get<{message: String, contacts: Contact}>('http://localhost:3000/contacts/')
+    this.http.get<{ message: String, contacts: Contact[] }>('http://localhost:3000/contacts')
       .subscribe(
         (responseData) => {
-          // this.contacts = responseData.contacts;
+          this.contacts = responseData.contacts;
+          this.sortAndSend();
+        },
+        (error: any) => {
+          console.log(error);
         }
       );
   }
 
   // Get one contact
-  getContact(id: string): Contact {
-    return this.contacts.find((contact) => contact.id === id);
+  getContact(id: string) {
+    return this.http.get<{ message: string, contact: Contact }>('http://localhost:3000/contacts' + id);
   }
 
   // Delete one contact
@@ -66,7 +67,7 @@ export class ContactService {
 
     // Add to database
     this.http
-      .post<{ message: string; contact: Contact }>(
+      .post<{ message: string, contact: Contact }>(
         'http://localhost:3000/contacts',
         contact,
         { headers: headers }
