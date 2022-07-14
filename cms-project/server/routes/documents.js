@@ -55,7 +55,7 @@ router.put('/:id', (req, res, next) => {
       document.url = req.body.url;
 
       Document.updateOne({ id: req.params.id }, document)
-        .then((res) => {
+        .then(() => {
           res.status(204).json({
             message: 'Document updated successfully',
           });
@@ -79,7 +79,7 @@ router.delete('/:id', (req, res, next) => {
   Document.findOne({ id: req.params.id })
     .then((document) => {
       Document.deleteOne({ id: req.params.id })
-        .then((res) => {
+        .then(() => {
           res.status(204).json({
             message: 'Document deleted successfully',
           });

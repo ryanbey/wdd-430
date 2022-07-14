@@ -77,7 +77,7 @@ router.put("/:id", (req, res, next) => {
       contact.group = req.body.group;
 
       Contact.updateOne({ id: req.params.id }, contact)
-        .then((res) => {
+        .then(() => {
           res.status(204).json({
             message: "Contact updated successfully",
           });
@@ -101,7 +101,7 @@ router.delete("/:id", (req, res, next) => {
   Contact.findOne({ id: req.params.id })
     .then((contact) => {
       Contact.deleteOne({ id: req.params.id })
-        .then((res) => {
+        .then(() => {
           res.status(204).json({
             message: "Contact deleted successfully",
           });

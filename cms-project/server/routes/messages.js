@@ -71,7 +71,7 @@ router.put("/:id", (req, res, next) => {
         (message.msgText = req.body.msgText),
         (message.sender = req.body.sender),
         Message.updateOne({ id: req.params.id }, message)
-          .then((res) => {
+          .then(() => {
             res.status(204).json({
               message: "Message updated successfully",
             });
@@ -95,7 +95,7 @@ router.delete("/:id", (req, res, next) => {
   Message.findOne({ id: req.params.id })
     .then((message) => {
       Message.deleteOne({ id: req.params.id })
-        .then((res) => {
+        .then(() => {
           res.status(204).json({
             message: "Message deleted successfully",
           });
