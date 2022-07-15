@@ -20,7 +20,7 @@ export class MessageEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.contactService.getContact('101').subscribe((response) => {
+    this.contactService.getContact('1').subscribe((response) => {
       this.currentSender = response.contact;
     });
   }
