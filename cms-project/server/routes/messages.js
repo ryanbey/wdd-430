@@ -40,7 +40,6 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
   const maxMessageId = sequenceGenerator.nextId("messages");
-  console.log(maxMessageId)
   const message = new Message({
     id: maxMessageId,
     subject: req.body.subject,
@@ -52,14 +51,14 @@ router.post("/", (req, res, next) => {
     .save()
     .then((createdMessage) => {
       res.status(201).json({
-        response: "Message added successfully",
-        newMessage: createdMessage,
+        message: "Message added successfully",
+        createdMessage: createdMessage,
       });
     })
-    .catch((error) => {
+    .catch((err) => {
       res.status(500).json({
         message: "An error occurred",
-        error: error,
+        error: err,
       });
     });
 });

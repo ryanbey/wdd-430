@@ -47,15 +47,16 @@ export class MessageService {
 
     // add to database
     this.http
-      .post<{ message: string; postedMessage: Message }>(
+      .post<{ message: string; newMessage: Message }>(
         'http://localhost:3000/messages/',
         message,
         { headers: headers }
       )
       .subscribe((responseData) => {
         // add new message to messages
-        this.messages.push(responseData.postedMessage);
-        this.messageChangedEvent.next(this.messages.slice());
+        this.messages.push(responseData.newMessage);
+        // this.messageChangedEvent.next(this.messages.slice());
+        this.getMessages();
       });
   }
 }
