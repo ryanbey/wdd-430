@@ -12,7 +12,7 @@ import { Message } from '../messages.model';
 export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject: ElementRef;
   @ViewChild('msgText') msgText: ElementRef;
-  currentSender: Contact;
+  currentSender: Contact
 
   constructor(
     private messageService: MessageService,
@@ -29,8 +29,8 @@ export class MessageEditComponent implements OnInit {
     const subjectValue = this.subject.nativeElement.value;
     const msgTextValue = this.msgText.nativeElement.value;
     const message = new Message(
-      '',
-      '',
+      '', // Object ID from MongoDB
+      '', // Sequence generator
       subjectValue,
       msgTextValue,
       this.currentSender

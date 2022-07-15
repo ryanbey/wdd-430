@@ -27,7 +27,7 @@ router.get("/:id", (req, res, next) => {
     .then((messages) => {
       res.status(200).json({
         message: "Message fetched successfully!",
-        message: message,
+        message: messages,
       });
     })
     .catch((error) => {
@@ -40,7 +40,6 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
   const maxMessageId = sequenceGenerator.nextId("messages");
-
   const message = new Message({
     id: maxMessageId,
     subject: req.body.subject,
