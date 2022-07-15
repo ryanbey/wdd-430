@@ -10,7 +10,6 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-edit.component.scss'],
 })
 export class ContactEditComponent implements OnInit {
-  originalContact;
   contact: Contact;
   groupContacts: Contact[] = [];
   editMode = false;
@@ -22,41 +21,38 @@ export class ContactEditComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Fill in form fields based on id in URL
     this.route.params.subscribe((params: Params) => {
-      const id = params['id'];
-      if (id === undefined || id === null) {
-        this.editMode = false;
-        return;
+      this.id = params['id'];
+
+      if (params['id'] != null) {
+        this.editMode = true;
       }
 
-      this.originalContact = this.contactService.getContact(id);
-
-      if (this.originalContact === undefined || this.originalContact === null) {
-        return;
-      }
-
-      this.editMode = true;
-      this.contact = JSON.parse(JSON.stringify(this.originalContact));
-      if (this.contact.group) {
-        this.groupContacts = JSON.parse(JSON.stringify(this.contact.group));
+      if (this.id) {
+        this.contactService
+          .getContact(this.id)
+          .subscribe((result: { message: String; contact: Contact }) => {
+            this.contact = result.contact;
+          });
       }
     });
   }
 
   onSubmit(form: NgForm) {
-    const value = form.value;
     const newContact = new Contact(
       '',
-      value.id,
-      value.name,
-      value.email,
-      value.phone,
-      value.imageUrl,
-      this.groupContacts
+      '',
+      form.value.name,
+      form.value.email,
+      form.value.phone,
+      form.value.imageUrl,
+      null
     );
+
     if (this.editMode) {
-      this.contactService.updateContact(this.originalContact, newContact);
+      this.contactService.updateContact(this.contact, newContact);
     } else {
       this.contactService.addContact(newContact);
     }

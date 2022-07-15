@@ -97,7 +97,7 @@ export class ContactService {
 
     // Set the id of the new Contact to the id of the old Contact
     newContact.id = originalContact.id;
-    // newContact._id = originalContact._id;
+    newContact._id = originalContact._id;
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -106,7 +106,7 @@ export class ContactService {
       .put('http://localhost:3000/contacts/' + originalContact.id, newContact, {
         headers: headers,
       })
-      .subscribe((response: Response) => {
+      .subscribe((response) => {
         this.contacts[pos] = newContact;
         this.sortAndSend();
       });
