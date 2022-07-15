@@ -35,6 +35,7 @@ export class ContactEditComponent implements OnInit {
       if (this.originalContact === undefined || this.originalContact === null) {
         return;
       }
+
       this.editMode = true;
       this.contact = JSON.parse(JSON.stringify(this.originalContact));
       if (this.contact.group) {

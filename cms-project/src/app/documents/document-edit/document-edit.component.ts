@@ -31,12 +31,10 @@ export class DocumentEditComponent implements OnInit {
 
       this.originalDocument = this.documentService.getDocument(id);
 
-      if (
-        this.originalDocument === undefined ||
-        this.originalDocument === null
-      ) {
+      if (this.originalDocument === undefined || this.originalDocument === null) {
         return;
       }
+
       this.editMode = true;
       this.document = JSON.parse(JSON.stringify(this.originalDocument));
     });
@@ -44,11 +42,14 @@ export class DocumentEditComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newDocument = new Document('',
-                                     value.name,
-                                     value.description,
-                                     value.url,
-                                     null);
+    const newDocument = new Document(
+      '',
+      value.name,
+      value.description,
+      value.url,
+      null
+    );
+
     if (this.editMode) {
       this.documentService.updateDocument(this.originalDocument, newDocument);
     } else {
