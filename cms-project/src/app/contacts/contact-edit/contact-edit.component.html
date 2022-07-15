@@ -48,7 +48,7 @@
             max="255"
             name="phone"
             [ngModel]="contact?.phone"
-            pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
+            pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
             #phone="ngModel">
             <div class="alert alert-danger" *ngIf="phone.touched && !phone.valid">
               Enter a valid phone number
